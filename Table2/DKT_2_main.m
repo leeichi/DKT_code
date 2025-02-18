@@ -37,7 +37,7 @@ for t = 1:trial
     obser = mvnrnd(MU,diag(VAR),n0);
     obser_squ_sum = sum(obser.^2,1);%更新變異數用
     obser_sum = sum(obser,1)./n_i;
-    obser_var = (obser_squ_sum./n_i) - (obser_sum.^2);
+    obser_var = ((obser_squ_sum./n_i) - (obser_sum.^2))*(n0/(n0-1));
     
     %---------
     while k_system > 1
@@ -93,7 +93,7 @@ for t = 1:trial
                    
                    obser_squ_sum(i) = obser_squ_sum(i) + temp_squ_sum;
                    obser_sum(i) = ((obser_sum(i)*n_i(i)) + temp_sum)/ (n_i(i)+add_num);
-                   obser_var(i) = obser_squ_sum(i)/(n_i(i)+add_num) - obser_sum(i)^2;%
+                   obser_var(i) = (obser_squ_sum(i)/(n_i(i)+add_num) - obser_sum(i)^2)*((n_i(i)+add_num)/((n_i(i)+add_num)-1));%
                    n_i(i)= Lambda_i;
                    samplenumber = samplenumber +add_num;
                 end
